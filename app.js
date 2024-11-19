@@ -47,5 +47,5 @@ function checkGuess(guess) {
 
 function playSong() {
     song.play();
-    feedback.innerHTML = "Correct! The song 'Last Christmas' by Wham! is playing now.";
+    feedback.innerHTML = "Correct! Your song is playing now.";
 }

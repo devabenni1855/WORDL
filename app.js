@@ -74,7 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (guess === targetWord) {
       resultMessage.textContent = "Congratulations! You guessed the word!";
-      audioElement.play(); // Play the MP3 file
+      
+      // Attempt to play the audio
+      audioElement.play().catch((error) => {
+        console.error("Audio playback failed:", error);
+        resultMessage.textContent += " (Audio playback failed. Check browser settings.)";
+      });
+
       inputField.disabled = true;
       submitButton.disabled = true;
     } else if (attempts >= maxAttempts) {

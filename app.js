@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inputField.disabled = true;
       submitButton.disabled = true;
     } else if (attempts >= maxAttempts) {
-      resultMessage.textContent = `Game Over! The word was ${targetWord}.`;
+      resultMessage.textContent = `Game Over! The word was something else.`;
       inputField.disabled = true;
       submitButton.disabled = true;
     } else {

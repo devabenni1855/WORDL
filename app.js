@@ -1,30 +1,25 @@
-const correctWord = "WHAM";
-let attempts = 0;
-let maxAttempts = 6;
+document.addEventListener("DOMContentLoaded", () => {
+  const targetWord = "WHAM"; // The correct word
+  const audioElement = document.getElementById("wham-audio"); // Reference to the audio element
+  const inputField = document.getElementById("guess-input");
+  const submitButton = document.getElementById("submit-button");
+  const resultMessage = document.getElementById("result-message");
 
-const guessInput = document.getElementById("guess-input");
-const submitBtn = document.getElementById("submit-btn");
-const feedback = document.getElementById("feedback");
-const attemptsDiv = document.getElementById("attempts");
-const song = document.getElementById("song");
+  let attempts = 0;
 
-submitBtn.addEventListener("click", () => {
-    const guess = guessInput.value.toUpperCase();
-    
-    if (guess.length !== 4) {
-        alert("Please enter a 4-letter word.");
-        return;
-    }
-
+  submitButton.addEventListener("click", () => {
+    const guess = inputField.value.toUpperCase();
     attempts++;
-    checkGuess(guess);
 
-    if (guess === correctWord) {
-        playSong();
-    } else if (attempts === maxAttempts) {
-        feedback.innerHTML = "Game over! The word was " + correctWord;
-        submitBtn.disabled = true;
+    if (guess === targetWord) {
+      resultMessage.textContent = "Congratulations! You guessed it!";
+      audioElement.play(); // Play the MP3 file
+    } else if (attempts >= 6) {
+      resultMessage.textContent = `Game Over! The correct word was ${targetWord}.`;
+    } else {
+      resultMessage.textContent = "Try again!";
     }
+  });
 });
 
 function checkGuess(guess) {

@@ -21,26 +21,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-function checkGuess(guess) {
-    let result = "";
-
-    for (let i = 0; i < 4; i++) {
-        if (guess[i] === correctWord[i]) {
-            result += `<span style="color: green;">${guess[i]}</span>`; // Correct letter in the correct position
-        } else if (correctWord.includes(guess[i])) {
-            result += `<span style="color: orange;">${guess[i]}</span>`; // Correct letter in the wrong position
-        } else {
-            result += `<span style="color: red;">${guess[i]}</span>`; // Incorrect letter
-        }
-    }
-
-    feedback.innerHTML = result;
-    attemptsDiv.innerHTML = `Attempts: ${attempts}/${maxAttempts}`;
-    guessInput.value = "";
-}
-
-function playSong() {
-    song.play();
-    feedback.innerHTML = "Correct! Your song is playing now.";
-}

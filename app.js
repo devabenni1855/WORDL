@@ -1,71 +1,51 @@
-<script>
-  const targetWord = "WHAM"; // The solution
-  const maxAttempts = 6;
+const correctWord = "WHAM";
+let attempts = 0;
+let maxAttempts = 6;
 
-  const wordGrid = document.getElementById("word-grid");
-  const input = document.getElementById("guess-input");
-  const submitBtn = document.getElementById("submit-btn");
-  const message = document.getElementById("message");
-  const videoContainer = document.getElementById("video-container");
-  const videoFrame = document.getElementById("wham-video");
+const guessInput = document.getElementById("guess-input");
+const submitBtn = document.getElementById("submit-btn");
+const feedback = document.getElementById("feedback");
+const attemptsDiv = document.getElementById("attempts");
+const song = document.getElementById("song");
 
-  let attempts = 0;
-
-  function createGrid() {
-    for (let i = 0; i < maxAttempts * 4; i++) {
-      const tile = document.createElement("div");
-      tile.classList.add("tile");
-      wordGrid.appendChild(tile);
-    }
-  }
-
-  function updateGrid(guess) {
-    const startIdx = attempts * 4;
-    for (let i = 0; i < 4; i++) {
-      const tile = wordGrid.children[startIdx + i];
-      tile.textContent = guess[i];
-      if (guess[i] === targetWord[i]) {
-        tile.classList.add("correct");
-      } else if (targetWord.includes(guess[i])) {
-        tile.classList.add("present");
-      } else {
-        tile.classList.add("absent");
-      }
-    }
-  }
-
-  function playWhamVideo() {
-    videoFrame.src = "https://www.youtube.com/embed/E8gmARGvPlI?autoplay=1";
-    videoContainer.style.display = "block";
-  }
-
-  function handleSubmit() {
-    const guess = input.value.toUpperCase();
+submitBtn.addEventListener("click", () => {
+    const guess = guessInput.value.toUpperCase();
+    
     if (guess.length !== 4) {
-      message.textContent = "Enter a 4-letter word!";
-      return;
+        alert("Please enter a 4-letter word.");
+        return;
     }
 
-    updateGrid(guess);
     attempts++;
+    checkGuess(guess);
 
-    if (guess === targetWord) {
-      message.textContent = "🎉 You guessed it! The word is " + targetWord;
-      submitBtn.disabled = true;
-      input.disabled = true;
-      playWhamVideo();
+    if (guess === correctWord) {
+        playSong();
     } else if (attempts === maxAttempts) {
-      message.textContent = "😢 Out of attempts! The word was " + targetWord;
-      submitBtn.disabled = true;
-    } else {
-      message.textContent = "Keep trying!";
+        feedback.innerHTML = "Game over! The word was " + correctWord;
+        submitBtn.disabled = true;
+    }
+});
+
+function checkGuess(guess) {
+    let result = "";
+
+    for (let i = 0; i < 4; i++) {
+        if (guess[i] === correctWord[i]) {
+            result += `<span style="color: green;">${guess[i]}</span>`; // Correct letter in the correct position
+        } else if (correctWord.includes(guess[i])) {
+            result += `<span style="color: orange;">${guess[i]}</span>`; // Correct letter in the wrong position
+        } else {
+            result += `<span style="color: red;">${guess[i]}</span>`; // Incorrect letter
+        }
     }
 
-    input.value = "";
-    input.focus();
-  }
+    feedback.innerHTML = result;
+    attemptsDiv.innerHTML = `Attempts: ${attempts}/${maxAttempts}`;
+    guessInput.value = "";
+}
 
-  submitBtn.addEventListener("click", handleSubmit);
-
-  createGrid();
-</script>
+function playSong() {
+    song.play();
+    feedback.innerHTML = "Correct! The song 'Last Christmas' by Wham! is playing now.";
+}

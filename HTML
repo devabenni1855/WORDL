@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHAM Wordle Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guess the 4-letter word!</h1>
+        <input type="text" id="guess-input" maxlength="4" placeholder="Enter your guess" />
+        <button id="submit-btn">Submit Guess</button>
+        <div id="feedback"></div>
+        <div id="attempts"></div>
+        <audio id="song" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
